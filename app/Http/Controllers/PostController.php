@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\PostRepository;
+use App\Services\PostService;
 use Illuminate\Http\Request;
 use App\Repositories\Post\PostRepositoryInterface;
 
@@ -11,12 +11,13 @@ class PostController extends Controller
     /**
      * @var PostRepositoryInterface|\App\Repositories\RepositoryInterface
      */
-    protected $postRepository;
+    protected $postService;
 
-    public function __construct(PostRepository $postRepository)
+    public function __construct(PostService $postService)
     {
-        $this->postRepository = $postRepository;
+        $this->postService = $postService;
     }
+
     /**
      * 文章列表页
      *
@@ -24,6 +25,7 @@ class PostController extends Controller
      */
     public function index()
     {
+        $posts = $this->postService->getAll();
         $posts = [
             ["title" => "this title 1"],
             ["title" => "this title 2"],
