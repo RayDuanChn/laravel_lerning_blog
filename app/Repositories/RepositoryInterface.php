@@ -1,5 +1,20 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: Administrator
+ * Date: 2018/5/25
+ * Time: 16:56
+ */
+
 namespace App\Repositories;
+
+
+/**
+ * Repository的基接口
+ *
+ * Interface RepositoryInterface
+ * @package App\Repositories
+ */
 
 interface RepositoryInterface
 {
@@ -37,4 +52,5 @@ interface RepositoryInterface
      * @return mixed
      */
     public function delete($id);
+
 }

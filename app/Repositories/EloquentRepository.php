@@ -1,29 +1,42 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: Administrator
+ * Date: 2018/5/25
+ * Time: 17:00
+ */
+
 namespace App\Repositories;
 
+
+/**
+ * Class EloquentRepository
+ * @package App\Repositories
+ */
 abstract class EloquentRepository implements RepositoryInterface
 {
+
     /**
-     * @var \Illuminate\Database\Eloquent\Model
+     * 注入的model
+     * @var
      */
     protected $_model;
 
     /**
      * EloquentRepository constructor.
      */
-    public function __construct()
+    function __construct()
     {
         $this->setModel();
     }
 
     /**
-     * get model
-     * @return string
+     * @return mixed
      */
     abstract public function getModel();
 
     /**
-     * Set model
+     *
      */
     public function setModel()
     {
@@ -32,28 +45,28 @@ abstract class EloquentRepository implements RepositoryInterface
         );
     }
 
+
     /**
-     * 得到所有
-     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     * @return mixed
      */
     public function getAll()
     {
         return $this->_model->all();
     }
 
+
     /**
-     * 得到单个
+     * 根据主键查找
      * @param $id
      * @return mixed
      */
     public function find($id)
     {
-        $result = $this->_model->find($id);
-        return $result;
+        return $this->_model->find($id);
     }
 
+
     /**
-     * 创建
      * @param array $attributes
      * @return mixed
      */
@@ -62,8 +75,8 @@ abstract class EloquentRepository implements RepositoryInterface
         return $this->_model->create($attributes);
     }
 
+
     /**
-     * 更新
      * @param $id
      * @param array $attributes
      * @return bool|mixed
@@ -78,9 +91,8 @@ abstract class EloquentRepository implements RepositoryInterface
         return false;
     }
 
+
     /**
-     * 删除
-     *
      * @param $id
      * @return bool
      */
@@ -91,7 +103,7 @@ abstract class EloquentRepository implements RepositoryInterface
             $result->delete();
             return true;
         }
-
         return false;
     }
+
 }
