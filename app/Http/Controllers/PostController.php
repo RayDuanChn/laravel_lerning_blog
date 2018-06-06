@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\PostService;
+use App\Http\Models\Post;
+use App\Http\Services\PostService;
 use Illuminate\Http\Request;
-use App\Repositories\Post\PostRepositoryInterface;
+use Illuminate\Support\Facades\App;
 
+/**
+ * Class PostController
+ * @package App\Http\Controllers
+ */
 class PostController extends Controller
 {
-    /**
-     * @var PostRepositoryInterface|\App\Repositories\RepositoryInterface
-     */
+
     protected $postService;
 
     public function __construct(PostService $postService)
@@ -21,32 +24,27 @@ class PostController extends Controller
     /**
      * 文章列表页
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $posts = $this->postService->getAll();
-        $posts = [
-            ["title" => "this title 1"],
-            ["title" => "this title 2"],
-            ["title" => "this title 3"],
-        ];
-        $name = [];
-        return view('posts.index', compact("posts", "name"));
-//        $posts = $this->postRepository->getAll();
-//
-//        return view('home.posts', compact('posts'));
+        $posts = $this->postService->index();
+        return view('posts.index', compact("posts"));
+
     }
 
     /**
      * 文章详情页
      *
-     * @param $id int Post ID
-     * @return \Illuminate\Http\Response
+     * @param Post $post
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show($id)
+    public function show(Post $post)    //Post模型绑定
     {
-        return view('posts.show', ['title' => "This is a title", 'isShow' => false]);
+        //$post = $this->postService->show($post);
+        $isShow = true;
+        return view('posts.show', compact("post", "isShow"));
 
 //        $posts = $this->postRepository->find($id);
 //
@@ -54,58 +52,74 @@ class PostController extends Controller
     }
 
     /**
-     * Create single posts
+     * 保存新文章
      *
      * @param $request \Illuminate\Http\Request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $data = $request->all();
+        //dd = dump and die
+        //dd(\Request::all());          //查看传入的参数
+        //dd(request());              //查看传入的参数的对象
+        //dd($request->all()); //查看传入的参数
+//        $data = $request->all();
+//
+        $params = $request->all('title', 'content');
 
-        //... Validation here
+        //验证
+//        $request->validate([
+//            'title' => 'required|max:255|min:5|string',
+//            'content' => 'required|min:10',
+//        ]);
 
-        $post = $this->postRepository->create($data);
+        $this->validate($request, [
+            'title' => 'required|max:255|min:5|string',
+            'content' => 'required|min:10',
+        ]);
 
-        return view('home.posts', compact('posts'));
+
+        //逻辑
+        $this->postService->createPost($params);
+
+        //渲染
+        return redirect("/posts"); //定位到路由/posts
     }
 
-
+    /**
+     * 创建文章页面
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create(){
         return view('posts.create');
     }
 
-    public function edit(){
-        return view('posts.edit');
+    public function edit(Post $post){
+        return view('posts.edit', compact('post'));
     }
 
-    /**
-     * Update single posts
-     *
-     * @param $request \Illuminate\Http\Request
-     * @param $id int Post ID
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(Post $post)
     {
-        $data = $request->all();
+        //验证
+        $this->validate(request(), [
+            'title' => 'required|max:255|min:5|string',
+            'content' => 'required|min:10',
+        ]);
 
-        //... Validation here
+        //逻辑
+        $post->title = request("title");
+        $post->content = request("content");
+        $post->save();
 
-        $post = $this->postRepository->update($id, $data);
-
-        return view('home.posts', compact('posts'));
+        //渲染
+        return redirect("/posts/{$post->id}"); //跳转到详情页
     }
 
-    /**
-     * Delete single posts
-     *
-     * @param $id int Post ID
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+
+    public function delete(Post $post)
     {
-        $this->postRepository->delete($id);
-        return view('home.posts');
+        dd($post);
+       $post->delete();
+        return redirect("/posts");
     }
 }

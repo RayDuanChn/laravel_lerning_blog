@@ -49,7 +49,7 @@ $app = require_once __DIR__.'/../bootstrap/app.php';
 |
 */
 
-$kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
+$kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);      //获取绑定的对象，根据绑定时的字符串
 
 $response = $kernel->handle(
     $request = Illuminate\Http\Request::capture()

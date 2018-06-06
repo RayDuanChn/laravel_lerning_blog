@@ -6,37 +6,31 @@
  * Time: 17:00
  */
 
-namespace App\Repositories;
+namespace App\Http\Repositories;
 
-
-/**
- * Class EloquentRepository
- * @package App\Repositories
- */
 abstract class EloquentRepository implements RepositoryInterface
 {
-
     /**
-     * 注入的model
-     * @var
+     * @var \Illuminate\Database\Eloquent\Model
      */
     protected $_model;
 
     /**
      * EloquentRepository constructor.
      */
-    function __construct()
+    public function __construct()
     {
         $this->setModel();
     }
 
     /**
-     * @return mixed
+     * get model
+     * @return string
      */
     abstract public function getModel();
 
     /**
-     *
+     * Set model
      */
     public function setModel()
     {
@@ -45,28 +39,28 @@ abstract class EloquentRepository implements RepositoryInterface
         );
     }
 
-
     /**
-     * @return mixed
+     * 得到所有
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
     public function getAll()
     {
         return $this->_model->all();
     }
 
-
     /**
-     * 根据主键查找
+     * 得到单个
      * @param $id
      * @return mixed
      */
     public function find($id)
     {
-        return $this->_model->find($id);
+        $result = $this->_model->find($id);
+        return $result;
     }
 
-
     /**
+     * 创建
      * @param array $attributes
      * @return mixed
      */
@@ -75,8 +69,8 @@ abstract class EloquentRepository implements RepositoryInterface
         return $this->_model->create($attributes);
     }
 
-
     /**
+     * 更新
      * @param $id
      * @param array $attributes
      * @return bool|mixed
@@ -91,8 +85,9 @@ abstract class EloquentRepository implements RepositoryInterface
         return false;
     }
 
-
     /**
+     * 删除
+     *
      * @param $id
      * @return bool
      */
@@ -103,7 +98,7 @@ abstract class EloquentRepository implements RepositoryInterface
             $result->delete();
             return true;
         }
+
         return false;
     }
-
 }

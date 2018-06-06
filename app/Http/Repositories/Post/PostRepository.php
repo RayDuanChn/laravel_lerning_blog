@@ -6,10 +6,11 @@
  * Time: 17:24
  */
 
-namespace App\Repositories;
+namespace App\Http\Repositories\Post;
 
 
-use App\Models\Post;
+use App\Http\Models\Post;
+use App\Http\Repositories\EloquentRepository;
 
 class PostRepository extends EloquentRepository
 {
@@ -47,6 +48,15 @@ class PostRepository extends EloquentRepository
             ->first();
 
         return $result;
+    }
+
+    /**
+     * 分页
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function getPaginatePosts(){
+        $results = Post::orderBy("created_at", 'desc')->paginate(5);     //分页
+        return $results;
     }
 
 
