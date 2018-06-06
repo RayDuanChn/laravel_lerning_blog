@@ -2,7 +2,8 @@
 @section("content")
         <div class="col-sm-8 blog-main">
             <form action="/posts" method="POST">
-                <input type="hidden" name="_token" value="MESUY3topeHgvFqsy9EcM916UWQq6khiGHM91wHy">
+                {{--<input type="hidden" name="_token" value={{ csrf_field() }}>--}}
+                {{ csrf_field() }}
                 <div class="form-group">
                     <label>标题</label>
                     <input name="title" type="text" class="form-control" placeholder="这里是标题">
@@ -13,6 +14,17 @@
                 </div>
                 <button type="submit" class="btn btn-default">提交</button>
             </form>
+
+            {{--显示错误信息--}}
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <br>
 
         </div><!-- /.blog-main -->

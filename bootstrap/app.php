@@ -27,8 +27,8 @@ $app = new Illuminate\Foundation\Application(
 */
 
 $app->singleton(
-    Illuminate\Contracts\Http\Kernel::class,
-    App\Http\Kernel::class
+    Illuminate\Contracts\Http\Kernel::class,    //string
+    App\Http\Kernel::class                      //对象， 上面的字符串绑定到对象中
 );
 
 $app->singleton(
