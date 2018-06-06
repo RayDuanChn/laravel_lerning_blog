@@ -23,7 +23,8 @@ class Kernel extends HttpKernel
 
     /**
      * The application's route middleware groups.
-     *
+     * 多个中间件打包成一个组，方便将他们应用到路由中
+     * web 中间组自动应用到 routes/web.php
      * @var array
      */
     protected $middlewareGroups = [

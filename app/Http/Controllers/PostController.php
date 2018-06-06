@@ -63,6 +63,9 @@ class PostController extends Controller
         //dd(\Request::all());          //查看传入的参数
         //dd(request());              //查看传入的参数的对象
         //dd($request->all()); //查看传入的参数
+       //$name = $request->input('name', 'Sally');
+
+
 //        $data = $request->all();
 //
         $params = $request->all('title', 'content');
@@ -121,5 +124,27 @@ class PostController extends Controller
         dd($post);
        $post->delete();
         return redirect("/posts");
+    }
+
+    public function sessionExample(Request $request){
+        //处理 Session 数据有两种主要方法：
+        //1. 全局辅助函数 session
+            // 获取 session 中的一条数据...
+            $value = session('key');
+            // 指定一个默认值...
+            $value = session('key', 'default');
+            // 在 Session 中存储一条数据...
+            session(['key' => 'value']);
+
+        //2. 通过一个 Request 实例
+            $value = $request->session()->get('key', 'default');
+            //获取全部session
+            $data = $request->session()->all();
+            //存储数据
+            $request->session()->put('key', 'value');
+            // Session 中是否存在某个值
+            if ($request->session()->has('users')) {
+                //
+            }
     }
 }

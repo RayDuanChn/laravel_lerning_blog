@@ -41,6 +41,7 @@ abstract class EloquentRepository implements RepositoryInterface
 
     /**
      * 得到所有
+     * 使用 Eloquent 中的 all 和 get 方法可以检索多个结果，并会返回一个Collection类型
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
     public function getAll()
@@ -61,6 +62,8 @@ abstract class EloquentRepository implements RepositoryInterface
 
     /**
      * 创建
+     * 你也可以使用 create 方法来保存新模型， 方法会返回模型实例。
+     * 在使用之前，需要先在模型上指定 fillable 或 guarded 属性，因为所有的 Eloquent 模型在默认情况下都不能进行批量赋值。
      * @param array $attributes
      * @return mixed
      */

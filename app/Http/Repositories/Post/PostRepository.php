@@ -8,6 +8,7 @@
 
 namespace App\Http\Repositories\Post;
 
+use App\Http\Model\Order;
 use App\Http\Models\Post;
 use App\Http\Repositories\EloquentRepository;
 
@@ -58,6 +59,21 @@ class PostRepository extends EloquentRepository
         return $results;
     }
 
+// save 用作插入
+    public function store()
+    {
+        $order = new Order();
+        $order->orderid = request("orderid");
+        $order->tourid = request("tourid");
+        $order->save();
+    }
+
+    // save 用作更新
+   public function save(){
+       $order = new Order();
+       $order->orderid = 'New Order Id';
+       $order->save();
+   }
 
     /**
      * 原生SQL查询
@@ -149,6 +165,5 @@ class PostRepository extends EloquentRepository
         DB::table('users')->insert(
             ['email' => 'john@example.com', 'votes' => 0]
         );
-
     }
 }

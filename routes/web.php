@@ -33,6 +33,19 @@ Route::delete('/posts/{post}/delete', 'PostController@delete');
 //默认情况： post => 表：posts => 主键：id
 Route::get('/posts/{post}', 'PostController@show');
 
+//中間件
+Route::get('admin/profile', ['middleware' => 'auth', function()
+{
+    //当我们访问http://yourdomain/admin/profile的时候，
+    //首先会经过全局中间件，然后就是我们在app/Http/Kernel.php的$routeMiddleware数组中定义的名称为auth的中间件
+
+    Route::get('user', function() {
+        // blablabla...
+    });
+    Route::get('article', function() {
+        // blablabla...
+    });
+}]);
 
 
 

@@ -16,6 +16,10 @@ return [
     |
     */
 
+    /**
+     * Laravel 在使用 Redis 作为 Session 驱动之前，需要通过 Composer 安装 predis/predis 扩展包 (~1.0)。
+     * 然后在 database 配置文件中配置 Redis 连接信息。在 session 配置文件中，connection 选项可用于指定 Session 使用哪个 Redis 连接。
+     */
     'driver' => env('SESSION_DRIVER', 'file'),
 
     /*
