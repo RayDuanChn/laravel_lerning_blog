@@ -127,6 +127,8 @@ class PostController extends Controller
     }
 
     public function sessionExample(Request $request){
+        \Request::all();
+
         //处理 Session 数据有两种主要方法：
         //1. 全局辅助函数 session
             // 获取 session 中的一条数据...
@@ -146,5 +148,14 @@ class PostController extends Controller
             if ($request->session()->has('users')) {
                 //
             }
+    }
+
+    public function logExample(\Psr\Log\LoggerInterface $log){
+        $app = app();   //获取容器
+       // \Log::info("asd");    //Fa
+        $log = $app->make('log');
+        $log->info();
+
+
     }
 }
