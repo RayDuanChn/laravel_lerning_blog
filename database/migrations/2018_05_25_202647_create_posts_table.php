@@ -14,6 +14,9 @@ class CreatePostsTable extends Migration
 
 
     //php artisan make:migration create_users_table
+    //php artisan migrate
+    //php artisan migrate:rollback  此命令将回滚最后一次“迁移”的操作，其中可能包含多个迁移文件
+
 
     public function up()
     {
