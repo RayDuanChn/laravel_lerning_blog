@@ -33,7 +33,13 @@ Route::delete('/posts/{post}/delete', 'PostController@delete');
 //默认情况： post => 表：posts => 主键：id
 Route::get('/posts/{post}', 'PostController@show');
 
-//中間件
+//route 中间件
+Route::get('/', function () {
+    //
+})->middleware('first', 'second');
+
+
+//中間件组
 Route::get('admin/profile', ['middleware' => 'auth', function()
 {
     //当我们访问http://yourdomain/admin/profile的时候，
