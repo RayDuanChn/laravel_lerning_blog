@@ -11,6 +11,10 @@ class CreatePostsTable extends Migration
      *
      * @return void
      */
+
+
+    //php artisan make:migration create_users_table
+
     public function up()
     {
         Schema::create('posts', function (Blueprint $table) {
